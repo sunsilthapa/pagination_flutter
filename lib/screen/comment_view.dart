@@ -22,7 +22,9 @@ class _CommentViewState extends ConsumerState<CommentView> {
   Widget build(BuildContext context) {
     final state = ref.watch(commentViewModelProvider);
     return Scaffold(
+      backgroundColor: Colors.amber[100],
       appBar: AppBar(
+        backgroundColor: Colors.yellow[400],
         title: const Text('Pagination Flutter'),
         actions: [
           TextButton.icon(
