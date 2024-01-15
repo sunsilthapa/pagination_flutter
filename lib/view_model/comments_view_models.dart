@@ -18,6 +18,11 @@ class CommentViewModel extends StateNotifier<CommentState> {
     getComments();
   }
 
+  Future resetState() async {
+    state = CommentState.initial();
+    getComments();
+  }
+
   Future getComments() async {
     state = state.copyWith(isLoading: true);
     final currentState = state;

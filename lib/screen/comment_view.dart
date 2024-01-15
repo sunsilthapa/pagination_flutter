@@ -24,6 +24,15 @@ class _CommentViewState extends ConsumerState<CommentView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pagination Flutter'),
+        actions: [
+          TextButton.icon(
+            onPressed: () {
+              ref.read(commentViewModelProvider.notifier).resetState();
+            },
+            icon: const Icon(Icons.refresh),
+            label: const Text('Refresh'),
+          ),
+        ],
       ),
       body: NotificationListener(
         onNotification: (notification) {
