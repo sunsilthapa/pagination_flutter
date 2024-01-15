@@ -18,7 +18,8 @@ class CommentViewModel extends StateNotifier<CommentState> {
     getComments();
   }
 
-  void getComments() async {
+  Future getComments() async {
+    state = state.copyWith(isLoading: true);
     final currentState = state;
     final page = currentState.page + 1;
     final comments = currentState.comments;
@@ -27,7 +28,8 @@ class CommentViewModel extends StateNotifier<CommentState> {
       // get data from data source
       final result = await _commentDataSource.getPosts(page);
       result.fold(
-        (failure) => state = state.copyWith(hasReachedMax: true),
+        (failure) =>
+            state = state.copyWith(hasReachedMax: true, isLoading: false),
         (data) {
           if (data.isEmpty) {
             state = state.copyWith(hasReachedMax: true);
@@ -35,6 +37,7 @@ class CommentViewModel extends StateNotifier<CommentState> {
             state = state.copyWith(
               comments: [...comments, ...data],
               page: page,
+              isLoading: false,
             );
           }
         },
