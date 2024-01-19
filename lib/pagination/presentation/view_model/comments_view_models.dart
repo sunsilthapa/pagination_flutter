@@ -1,17 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pagination_flutter/data_source/comments_data_source.dart';
-import 'package:pagination_flutter/state/comment_state.dart';
+import 'package:pagination_flutter/pagination/domain/usecase/get_all_comments_usecase.dart';
+import 'package:pagination_flutter/pagination/presentation/state/comment_state.dart';
 
 final commentViewModelProvider =
     StateNotifierProvider<CommentViewModel, CommentState>((ref) {
-  final commentDataSource = ref.read(commentDataSourceProvider);
-  return CommentViewModel(commentDataSource);
+  final getCommentUsecase = ref.read(getCommentUsecaseProvider);
+  return CommentViewModel(getCommentUsecase);
 });
 
 class CommentViewModel extends StateNotifier<CommentState> {
-  final CommentDataSource _commentDataSource;
+  final GetComentsUsecase _getComentsUsecase;
   CommentViewModel(
-    this._commentDataSource,
+    this._getComentsUsecase,
   ) : super(
           CommentState.initial(),
         ) {
@@ -30,8 +30,8 @@ class CommentViewModel extends StateNotifier<CommentState> {
     final comments = currentState.comments;
     final hasReachedMax = currentState.hasReachedMax;
     if (!hasReachedMax) {
-      // get data from data source
-      final result = await _commentDataSource.getPosts(page);
+      //* get data from data source
+      final result = await _getComentsUsecase.getComments(page);
       result.fold(
         (failure) =>
             state = state.copyWith(hasReachedMax: true, isLoading: false),

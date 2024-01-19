@@ -1,4 +1,4 @@
-import 'package:pagination_flutter/model/comments.dart';
+import 'package:pagination_flutter/pagination/data/model/comments.dart';
 
 class CommentState {
   final List<Comments> comments;

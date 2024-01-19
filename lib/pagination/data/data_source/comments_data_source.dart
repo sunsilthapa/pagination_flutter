@@ -3,8 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pagination_flutter/config/api_endpoints.dart';
 import 'package:pagination_flutter/config/http_service.dart';
-import 'package:pagination_flutter/failure/failure.dart';
-import 'package:pagination_flutter/model/comments.dart';
+import 'package:pagination_flutter/core/failure/failure.dart';
+import 'package:pagination_flutter/pagination/data/model/comments.dart';
 
 final commentDataSourceProvider = Provider<CommentDataSource>((ref) {
   final dio = ref.read(httpServiceProvider);

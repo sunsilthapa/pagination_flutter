@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pagination_flutter/view_model/comments_view_models.dart';
+import 'package:pagination_flutter/pagination/presentation/view_model/phots_viewmodel.dart';
 
-class CommentView extends ConsumerStatefulWidget {
-  const CommentView({super.key});
+class PhotoView extends ConsumerStatefulWidget {
+  const PhotoView({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _CommentViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _PhotoViewState();
 }
 
-class _CommentViewState extends ConsumerState<CommentView> {
+class _PhotoViewState extends ConsumerState<PhotoView> {
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -20,7 +20,7 @@ class _CommentViewState extends ConsumerState<CommentView> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(commentViewModelProvider);
+    final state = ref.watch(photosViewModelProvider);
     return Scaffold(
       backgroundColor: Colors.amber[100],
       appBar: AppBar(
@@ -29,7 +29,7 @@ class _CommentViewState extends ConsumerState<CommentView> {
         actions: [
           TextButton.icon(
             onPressed: () {
-              ref.read(commentViewModelProvider.notifier).resetState();
+              ref.read(photosViewModelProvider.notifier).resetState();
             },
             icon: const Icon(Icons.refresh),
             label: const Text('Refresh'),
@@ -39,10 +39,10 @@ class _CommentViewState extends ConsumerState<CommentView> {
       body: NotificationListener(
         onNotification: (notification) {
           if (notification is ScrollEndNotification) {
-            // Scroll garda feri last ma ho ki haina bhanera check garne ani data call garne
+            //* Scroll garda feri last ma ho ki haina bhanera check garne ani data call garne
             if (_scrollController.position.extentAfter == 0) {
-              // Data fetch gara api bata
-              ref.read(commentViewModelProvider.notifier).getComments();
+              //* Data fetch gara api bata
+              ref.read(photosViewModelProvider.notifier).getPhotos();
             }
           }
           return true;
@@ -53,14 +53,12 @@ class _CommentViewState extends ConsumerState<CommentView> {
               child: ListView.separated(
                 separatorBuilder: (context, index) => const Divider(),
                 controller: _scrollController,
-                itemCount: state.comments.length,
+                itemCount: state.photos.length,
                 physics: const AlwaysScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  final comment = state.comments[index];
-                  return ListTile(
-                    leading: Text(comment.id.toString()),
-                    title: Text(comment.name),
-                    subtitle: Text(comment.email),
+                  final photo = state.photos[index];
+                  return Card(
+                    child: Image.network(photo.url),
                   );
                 },
               ),

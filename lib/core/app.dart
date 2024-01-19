@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pagination_flutter/screen/comment_view.dart';
+import 'package:pagination_flutter/pagination/presentation/screen/dashboard.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -11,7 +11,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const CommentView(),
+      home: const DashboardView(),
     );
   }
 }
